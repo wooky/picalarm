@@ -40,6 +40,7 @@ inline void segment_increment_hour()
 inline void segment_render()
 {
     static segment *seg = &minutes_ones;
+    CATHODE_LAT = seg->cathode_bitmask;
     LED_SEG_LAT = digit_masks[seg->value];
     seg = seg->next;
 }

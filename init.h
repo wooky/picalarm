@@ -6,14 +6,14 @@
 // 'C' source line config statements
 
 // CONFIG1
-#pragma config FEXTOSC = LP     // External Oscillator mode selection bits (LP (crystal oscillator) optimized for 32.768kHz; PFM set to low power)
+#pragma config FEXTOSC = OFF    // External Oscillator mode selection bits (Oscillator not enabled)
 #pragma config RSTOSC = LFINT   // Power-up default value for COSC bits (LFINTOSC)
 #pragma config CLKOUTEN = OFF   // Clock Out Enable bit (CLKOUT function is disabled; i/o or oscillator function on OSC2)
 #pragma config CSWEN = ON       // Clock Switch Enable bit (Writing to NOSC and NDIV is allowed)
 #pragma config FCMEN = ON       // Fail-Safe Clock Monitor Enable bit (FSCM timer enabled)
 
 // CONFIG2
-#pragma config MCLRE = ON       // Master Clear Enable bit (MCLR pin is Master Clear function)
+#pragma config MCLRE = OFF      // Master Clear Enable bit (MCLR pin is Master Clear function)
 #pragma config PWRTE = OFF      // Power-up Timer Enable bit (PWRT disabled)
 #pragma config LPBOREN = OFF    // Low-Power BOR enable bit (ULPBOR disabled)
 #pragma config BOREN = ON       // Brown-out reset enable bits (Brown-out Reset Enabled, SBOREN bit is ignored)
@@ -24,7 +24,7 @@
 
 // CONFIG3
 #pragma config WDTCPS = WDTCPS_3// WDT Period Select bits (Divider ratio 1:256)
-#pragma config WDTE = ON        // WDT operating mode (WDT enabled regardless of sleep; SWDTEN ignored)
+#pragma config WDTE = OFF        // WDT operating mode (WDT enabled regardless of sleep; SWDTEN ignored)
 #pragma config WDTCWS = WDTCWS_7// WDT Window Select bits (window always open (100%); software control; keyed access not required)
 #pragma config WDTCCS = LFINTOSC// WDT input clock selector (WDT reference clock is the 31.0kHz LFINTOSC output)
 

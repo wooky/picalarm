@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/clock.h</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/button.c</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/main.c</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/pinout.h</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/segment.h</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/button.h</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/segment.c</file>
-            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock-c.X/clock.c</file>
+            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock.X/init.c</file>
+            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock.X/main.c</file>
+            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock.X/clock.c</file>
+            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock.X/pinout.h</file>
+            <file>file:/C:/Users/Yakov/MPLABXProjects/alarmclock.X/segment.c</file>
         </group>
     </open-files>
 </project-private>

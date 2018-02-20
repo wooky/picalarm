@@ -11,6 +11,6 @@ void main()
         clock_tick();
         button_tick();
         segment_render();
-        SLEEP();
+//        SLEEP();
     }
 }

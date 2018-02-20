@@ -31,7 +31,7 @@ inline void init()
     TRISB = 0;
     TRISC = 0;
     
-#ifndef __MPLAB_DEBUGGER_SIMULATOR
+#ifndef __DEBUG
 //    ; Wait until internal oscillator stabilizes
     while(!OSCSTATbits.LFOR) {}
 #endif
