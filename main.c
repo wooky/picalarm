@@ -9,8 +9,8 @@ void main()
     while(1)
     {
         clock_tick();
-        button_tick();
+//        button_tick();
         segment_render();
-//        SLEEP();
+        SLEEP();
     }
 }
