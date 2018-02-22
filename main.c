@@ -6,6 +6,7 @@
 void main()
 {
     init();
+    CLRWDT();
     while(1)
     {
         clock_tick();

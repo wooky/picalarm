@@ -7,7 +7,7 @@
 
 // CONFIG1
 #pragma config FEXTOSC = OFF    // External Oscillator mode selection bits (Oscillator not enabled)
-#pragma config RSTOSC = HFINT1   // Power-up default value for COSC bits (LFINTOSC)
+#pragma config RSTOSC = HFINT1  // Power-up default value for COSC bits (HFINTOSC (1MHz))
 #pragma config CLKOUTEN = OFF   // Clock Out Enable bit (CLKOUT function is disabled; i/o or oscillator function on OSC2)
 #pragma config CSWEN = ON       // Clock Switch Enable bit (Writing to NOSC and NDIV is allowed)
 #pragma config FCMEN = ON       // Fail-Safe Clock Monitor Enable bit (FSCM timer enabled)
@@ -23,10 +23,10 @@
 #pragma config STVREN = ON      // Stack Overflow/Underflow Reset Enable bit (Stack Overflow or Underflow will cause a reset)
 
 // CONFIG3
-#pragma config WDTCPS = WDTCPS_3// WDT Period Select bits (Divider ratio 1:256)
+#pragma config WDTCPS = WDTCPS_2// WDT Period Select bits (Divider ratio 1:128)
 #pragma config WDTE = ON        // WDT operating mode (WDT enabled regardless of sleep; SWDTEN ignored)
 #pragma config WDTCWS = WDTCWS_7// WDT Window Select bits (window always open (100%); software control; keyed access not required)
-#pragma config WDTCCS = LFINTOSC// WDT input clock selector (WDT reference clock is the 31.0kHz LFINTOSC output)
+#pragma config WDTCCS = HFINTOSC// WDT input clock selector (WDT reference clock is the 31.25 kHz HFINTOSC)
 
 // CONFIG4
 #pragma config BBSIZE = BB512   // Boot Block Size Selection bits (512 words boot block size)

@@ -1,13 +1,15 @@
 #include "clock.h"
 #include "segment.h"
+#include "pinout.h"
 
 inline void clock_tick()
 {
-    static unsigned char tick = 0;
-    if(tick == TICK_LENGTH)
+    static float tick = 0;
+    if(tick >= TICK_LENGTH)
     {
-        tick = 0;
+        tick -= TICK_LENGTH;
         clock_increment_second();
+        SECONDS_INDICATOR_PORT ^= SECONDS_INDICATOR_MASK;
     }
     else
     {
