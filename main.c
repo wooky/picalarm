@@ -7,10 +7,10 @@ void main()
 {
     init();
     CLRWDT();
-    while(1)
+    while (1)
     {
         clock_tick();
-//        button_tick();
+        //        button_tick();
         segment_render();
         SLEEP();
     }

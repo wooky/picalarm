@@ -6,7 +6,7 @@ typedef struct _segment {
     const unsigned char max;
     const unsigned char cathode_bitmask;
     struct _segment* next;
-    bit (*incrementer)(struct _segment*);
+    bit(*incrementer)(struct _segment*);
 } segment;
 
 extern segment hours_tens;

@@ -5,7 +5,7 @@
 inline void clock_tick()
 {
     static float tick = 0;
-    if(tick >= TICK_LENGTH)
+    if (tick >= TICK_LENGTH)
     {
         tick -= TICK_LENGTH;
         clock_increment_second();
@@ -20,7 +20,7 @@ inline void clock_tick()
 inline static void clock_increment_second()
 {
     static unsigned char seconds = 0;
-    if(seconds == 59)
+    if (seconds == 59)
     {
         seconds = 0;
         segment_increment_minute();
