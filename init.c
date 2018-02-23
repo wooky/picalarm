@@ -26,8 +26,18 @@ inline void init()
     TRISB = 0;
     TRISC = 0;
 
+    //////////////// CLOCK SETUP ////////////////
+
+    // Use HFINTOSC as the clock source (1 MHz)
+#define TIMER1_HFINTOSC 0b0011
+    T1CLK = TIMER1_HFINTOSC;
+
+    // To have the timer wake from sleep, interrupts must be enabled
+    PIE4 |= _PIE4_TMR1IE_MASK; // Enable TIMER1 interrupts
+    INTCON |= _INTCON_PEIE_MASK; // Enable peripheral interrupts
+
 #ifndef __DEBUG
-    //    ; Wait until internal oscillator stabilizes
+    // Wait until internal oscillator stabilizes
     while (!OSCSTATbits.HFOR);
 #endif
 }

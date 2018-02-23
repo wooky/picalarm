@@ -6,9 +6,9 @@
 void main()
 {
     init();
-    CLRWDT();
     while (1)
     {
+        clock_set_timer();
         clock_tick();
         //        button_tick();
         segment_render();

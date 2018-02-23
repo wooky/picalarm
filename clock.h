@@ -1,10 +1,10 @@
 #ifndef PICALARM_CLOCK_H_
 #define	PICALARM_CLOCK_H_
 
-//Number of ticks in a second
-//Good luck figuring this number out
-#define TICK_LENGTH 157.125
+#define CLOCK_FREQUENCY_HZ 1000000
+#define TICK_LENGTH_MS 4
 
+inline void clock_set_timer();
 inline void clock_tick();
 
 inline static void clock_increment_second();
