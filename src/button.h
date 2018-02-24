@@ -8,10 +8,6 @@ typedef struct {
     unsigned char ticks_pushed;
 } button;
 
-static button button_minutes;
-static button button_hours;
-static button button_alarm;
-
 inline void button_tick();
 
 static bit button_is_pressed(button* btn);
