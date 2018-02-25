@@ -28,13 +28,29 @@ inline void init()
 
     //////////////// CLOCK SETUP ////////////////
 
+    // Operate the timer in 8-bit mode so we can set a period buffer
+    T0CON0bits.T016BIT = 0;
+
     // Use HFINTOSC as the clock source (1 MHz)
-#define TIMER1_HFINTOSC 0b0011
-    T1CLK = TIMER1_HFINTOSC;
+#define TIMER0_HFINTOSC 0b011
+    T0CON1bits.T0CS = TIMER0_HFINTOSC;
+
+    // Make the timer asynchronous to have it wake up from sleep
+    T0CON1bits.T0ASYNC = 1;
+
+    // Make the timer tick every 4096 us
+    // For some reason the prescale needs to be twice as big?
+#define TIMER0_PRESCALE_8192 0b1101
+    T0CON1bits.T0CKPS = TIMER0_PRESCALE_8192;
+
+    // Reaching 4096 us is good enough, so the period buffer can be 1
+    TMR0H = 1;
 
     // To have the timer wake from sleep, interrupts must be enabled
-    PIE4 |= _PIE4_TMR1IE_MASK; // Enable TIMER1 interrupts
-    INTCON |= _INTCON_PEIE_MASK; // Enable peripheral interrupts
+    PIE0bits.TMR0IE = 1;
+
+    // Finally, turn on the timer
+    T0CON0bits.T0EN = 1;
 
 #ifndef __DEBUG
     // Wait until internal oscillator stabilizes
