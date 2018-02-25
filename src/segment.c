@@ -6,7 +6,7 @@ segment hours_ones = {0, 9, CATHODE_HOURS_ONES, &hours_tens, segment_incrementer
 segment minutes_tens = {0, 5, CATHODE_MINUTES_TENS, &hours_ones, segment_incrementer_standard};
 segment minutes_ones = {0, 9, CATHODE_MINUTES_ONES, &minutes_tens, segment_incrementer_standard};
 
-const unsigned char digit_masks[10] = {
+const uint8_t digit_masks[10] = {
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
     LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT,
@@ -47,7 +47,7 @@ inline void segment_render()
 
 static bit segment_incrementer_standard(segment* seg)
 {
-    unsigned char current_value = seg->value;
+    uint8_t current_value = seg->value;
     if (current_value == seg->max)
     {
         seg->value = 0;

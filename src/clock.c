@@ -3,7 +3,7 @@
 
 inline void clock_tick()
 {
-    static unsigned short long elapsed = 0;
+    static uint24_t elapsed = 0;
     PIR0 &= ~_PIR0_TMR0IF_MASK;
     elapsed += TICK_LENGTH_US;
     while (elapsed >= US_IN_SECONDS)
@@ -16,7 +16,7 @@ inline void clock_tick()
 
 inline static void clock_increment_second()
 {
-    static unsigned char seconds = 0;
+    static uint8_t seconds = 0;
     if (seconds == 59)
     {
         seconds = 0;

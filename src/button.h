@@ -1,11 +1,13 @@
 #ifndef PICALARM_BUTTON_H_
 #define	PICALARM_BUTTON_H_
 
+#include <stdint.h>
+
 #define TICKS_FOR_PRESS 62
 
 typedef struct {
-    const unsigned char button_mask;
-    unsigned char ticks_pushed;
+    const uint8_t button_mask;
+    uint8_t ticks_pushed;
 } button;
 
 inline void button_tick();

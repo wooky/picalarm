@@ -8,8 +8,8 @@ static button button_alarm = {BTN_ALARM_ADJUST, 0};
 
 inline void button_tick()
 {
-    signed char minutes_pressed = button_is_pressed(&button_minutes);
-    signed char hours_pressed = button_is_pressed(&button_hours);
+    int8_t minutes_pressed = button_is_pressed(&button_minutes);
+    int8_t hours_pressed = button_is_pressed(&button_hours);
 
     if (minutes_pressed)
     {
@@ -29,7 +29,7 @@ static bit button_is_pressed(button* btn)
         return 0;
     }
 
-    unsigned char current_value = btn->ticks_pushed;
+    uint8_t current_value = btn->ticks_pushed;
 
     if (current_value == TICKS_FOR_PRESS)
     {
