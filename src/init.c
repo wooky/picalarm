@@ -38,13 +38,15 @@ inline void init()
     // Make the timer asynchronous to have it wake up from sleep
     T0CON1bits.T0ASYNC = 1;
 
-    // Make the timer tick every 4096 us
-    // For some reason the prescale needs to be twice as big?
-#define TIMER0_PRESCALE_8192 0b1101
-    T0CON1bits.T0CKPS = TIMER0_PRESCALE_8192;
-
-    // Reaching 4096 us is good enough, so the period buffer can be 1
-    TMR0H = 1;
+    // Make the timer tick every 4000 us
+    // At 1 MHZ (1 us), we would need to divide that by 4000
+    // Setting the prescaler to 32, the period buffer will be set to 125
+    // However, for some reason, the prescaler really needs to be set 4 times
+    // higher
+#define TIMER0_PRESCALER_128 0b0111
+    T0CON1bits.T0CKPS = TIMER0_PRESCALER_128;
+#define PERIOD_BUFFER 125
+    TMR0H = PERIOD_BUFFER;
 
     // To have the timer wake from sleep, interrupts must be enabled
     PIE0bits.TMR0IE = 1;

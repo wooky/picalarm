@@ -3,12 +3,14 @@
 
 inline void clock_tick()
 {
-    static uint24_t elapsed = 0;
+    static uint8_t ticks = 0;
     PIR0 &= ~_PIR0_TMR0IF_MASK;
-    elapsed += TICK_LENGTH_US;
-    while (elapsed >= US_IN_SECONDS)
+    ticks++;
+#define US_IN_SECONDS 1000000
+#define TICKS_PER_SECOND US_IN_SECONDS / TICK_LENGTH_US
+    if (ticks == TICKS_PER_SECOND - 1)
     {
-        elapsed -= US_IN_SECONDS;
+        ticks = 0;
         clock_increment_second();
         SECONDS_INDICATOR_PORT ^= SECONDS_INDICATOR_MASK;
     }
