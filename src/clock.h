@@ -4,6 +4,7 @@
 #include "pinout.h"
 
 #define TICK_LENGTH_US 4000
+#define CORRECTION_MIN 9
 
 inline void clock_tick();
 

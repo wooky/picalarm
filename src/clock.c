@@ -19,10 +19,19 @@ inline void clock_tick()
 inline static void clock_increment_second()
 {
     static uint8_t seconds = 0;
+    static uint8_t minutes_for_correction = 0;
     if (seconds == 59)
     {
-        seconds = 0;
-        segment_increment_minute();
+        if (minutes_for_correction == CORRECTION_MIN - 1) //or maybe I shouldn't have the -1 here?
+        {
+            minutes_for_correction = 0;
+        }
+        else
+        {
+            minutes_for_correction++;
+            seconds = 0;
+            segment_increment_minute();
+        }
     }
     else
     {
