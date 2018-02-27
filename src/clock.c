@@ -22,7 +22,7 @@ inline static void clock_increment_second()
     static uint8_t minutes_for_correction = 0;
     if (seconds == 59)
     {
-        if (minutes_for_correction == CORRECTION_MIN - 1) //or maybe I shouldn't have the -1 here?
+        if (minutes_for_correction == CORRECTION_MIN)
         {
             minutes_for_correction = 0;
         }
