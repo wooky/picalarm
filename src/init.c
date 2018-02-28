@@ -28,6 +28,9 @@ inline void init()
 
     //////////////// CLOCK SETUP ////////////////
 
+    // Tune HFINTOSC to be more accurate
+    OSCTUNE = 0b000101;
+
     // Operate the timer in 8-bit mode so we can set a period buffer
     T0CON0bits.T016BIT = 0;
 
