@@ -11,7 +11,7 @@ inline void clock_tick()
     {
         ticks = 0;
         clock_increment_second();
-        SECONDS_INDICATOR_PORT ^= SECONDS_INDICATOR_MASK;
+        segment_toggle_seconds();
     }
     else
     {

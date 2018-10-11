@@ -7,6 +7,7 @@ typedef struct _segment {
     uint8_t value;
     const uint8_t max;
     const uint8_t cathode_bitmask;
+    const uint8_t* digit_masks;
     struct _segment* next;
     bit(*incrementer)(struct _segment*);
 } segment;
@@ -16,6 +17,7 @@ extern segment hours_ones;
 extern segment minutes_tens;
 extern segment minutes_ones;
 
+inline void segment_toggle_seconds();
 inline void segment_increment_minute();
 inline void segment_increment_hour();
 inline void segment_render();
