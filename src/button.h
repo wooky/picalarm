@@ -1,5 +1,5 @@
 #ifndef PICALARM_BUTTON_H_
-#define	PICALARM_BUTTON_H_
+#define PICALARM_BUTTON_H_
 
 #include <stdint.h>
 

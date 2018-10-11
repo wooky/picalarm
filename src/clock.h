@@ -1,5 +1,5 @@
 #ifndef PICALARM_CLOCK_H_
-#define	PICALARM_CLOCK_H_
+#define PICALARM_CLOCK_H_
 
 #include "pinout.h"
 

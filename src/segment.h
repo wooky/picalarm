@@ -1,5 +1,5 @@
 #ifndef PICALARM_SEGMENT_H_
-#define	PICALARM_SEGMENT_H_
+#define PICALARM_SEGMENT_H_
 
 #include <stdint.h>
 
