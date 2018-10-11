@@ -1,0 +1,13 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 7Segment
+D One digit 7 segment blue LED, common anode
+K display LED 7-segment
+F http://www.kingbright.com/attachments/file/psearch/000/00/00/KCSA02-136(Ver.7B).pdf
+$ENDCMP
+#
+$CMP PIC16F15344
+D PIC16F15344
+$ENDCMP
+#
+#End Doc Library

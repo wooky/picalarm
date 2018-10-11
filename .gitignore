@@ -1,3 +1,7 @@
 build/
 debug/
 dist/
+
+# KiCad ignores
+*.bak
+*.bck
