@@ -8,20 +8,21 @@ static button button_alarm = {BTN_ALARM_ADJUST, 0};
 
 inline void button_tick()
 {
-    int8_t minutes_pressed = button_is_pressed(&button_minutes);
-    int8_t hours_pressed = button_is_pressed(&button_hours);
+    bool minutes_pressed = button_is_pressed(&button_minutes);
+    bool hours_pressed = button_is_pressed(&button_hours);
+    button_alarm_pressed = button_is_pressed(&button_alarm);
 
     if (minutes_pressed)
     {
-        segment_increment_minute();
+        segment_increment_minute(button_alarm_pressed);
     }
     if (hours_pressed)
     {
-        segment_increment_hour();
+        segment_increment_hour(button_alarm_pressed);
     }
 }
 
-static bit button_is_pressed(button* btn)
+static bool button_is_pressed(button* btn)
 {
     if (!(BUTTON_PORT & btn->button_mask))
     {

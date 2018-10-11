@@ -25,7 +25,7 @@ inline static void clock_increment_second()
     if (seconds == 59)
     {
         seconds = 0;
-        segment_increment_minute();
+        segment_increment_minute(false);
     }
     else
     {
