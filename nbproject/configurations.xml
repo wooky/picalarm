@@ -9,6 +9,7 @@
       <itemPath>src/init.h</itemPath>
       <itemPath>src/pinout.h</itemPath>
       <itemPath>src/segment.h</itemPath>
+      <itemPath>src/buzzer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,6 +23,7 @@
       <itemPath>src/init.c</itemPath>
       <itemPath>src/main.c</itemPath>
       <itemPath>src/segment.c</itemPath>
+      <itemPath>src/buzzer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
