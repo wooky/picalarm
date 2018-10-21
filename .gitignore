@@ -5,3 +5,4 @@ dist/
 # KiCad ignores
 *.bak
 *.bck
+*.kicad_pcb-bak

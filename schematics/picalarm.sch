@@ -100,7 +100,7 @@ F 1 "32.768 KHz" V 6205 2419 50  0000 R CNN
 F 2 "Crystal:Crystal_DS26_D2.0mm_L6.0mm_Horizontal" H 6250 2550 50  0001 C CNN
 F 3 "~" H 6250 2550 50  0001 C CNN
 	1    6250 2550
-	0    1    1    0   
+	0    -1   -1   0   
 $EndComp
 Wire Wire Line
 	6250 2300 6250 2400
@@ -303,7 +303,7 @@ Wire Wire Line
 Connection ~ 1900 1650
 Connection ~ 1900 1000
 $Comp
-L Device:Q_NPN_BCE Q1
+L Device:Q_NPN_EBC Q1
 U 1 1 5BC68F53
 P 2150 5950
 F 0 "Q1" H 2341 5950 50  0000 L CNN
@@ -314,7 +314,7 @@ F 3 "~" H 2150 5950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q2
+L Device:Q_NPN_EBC Q2
 U 1 1 5BC68FB7
 P 3750 5950
 F 0 "Q2" H 3941 5950 50  0000 L CNN
@@ -325,7 +325,7 @@ F 3 "~" H 3750 5950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q3
+L Device:Q_NPN_EBC Q3
 U 1 1 5BC69015
 P 6100 5950
 F 0 "Q3" H 6291 5950 50  0000 L CNN
@@ -336,7 +336,7 @@ F 3 "~" H 6100 5950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q5
+L Device:Q_NPN_EBC Q5
 U 1 1 5BC6907D
 P 7850 5950
 F 0 "Q5" H 8041 5950 50  0000 L CNN
@@ -616,11 +616,11 @@ F 3 "~" H 7450 3000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q4
+L Device:Q_NPN_EBC Q4
 U 1 1 5BCA4279
 P 7800 3450
 F 0 "Q4" H 7991 3496 50  0000 L CNN
-F 1 "Q_NPN_BCE" H 7991 3405 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 7991 3405 50  0001 L CNN
 F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 8000 3550 50  0001 C CNN
 F 3 "~" H 7800 3450 50  0001 C CNN
 	1    7800 3450
