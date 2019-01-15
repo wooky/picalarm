@@ -37,7 +37,7 @@ segment minutes_ones = {0, 0, 9, CATHODE_MINUTES_ONES, digit_masks, &minutes_ten
 
 inline void segment_toggle_seconds()
 {
-    hours_tens.value |= SECONDS_INDICATOR_MAGIC_VALUE;
+    hours_tens.value ^= SECONDS_INDICATOR_MAGIC_VALUE;
 }
 
 inline void segment_increment_minute(bool adjust_alarm)
