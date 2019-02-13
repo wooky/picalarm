@@ -9,7 +9,6 @@ typedef struct _segment {
     uint8_t alarm_value;
     const uint8_t max;
     const uint8_t cathode_bitmask;
-    const uint8_t* digit_masks;
     struct _segment* next;
     bit(*incrementer)(struct _segment*, bool);
 } segment;

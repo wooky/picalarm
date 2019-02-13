@@ -13,6 +13,8 @@ void main()
         button_tick();
         segment_render();
         buzzer_tick();
+        
         SLEEP();
+        PIR4bits.TMR2IF = 0;
     }
 }

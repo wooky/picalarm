@@ -3,7 +3,7 @@
 
 #include "pinout.h"
 
-#define TICK_LENGTH_US 4000
+#define TICK_LENGTH_MS 4
 
 inline void clock_tick();
 

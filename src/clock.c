@@ -6,8 +6,8 @@ inline void clock_tick()
 {
     static uint8_t ticks = 0;
     PIR0 &= ~_PIR0_TMR0IF_MASK;
-#define US_IN_SECONDS 1000000
-#define TICKS_PER_SECOND US_IN_SECONDS / TICK_LENGTH_US
+#define MS_IN_SECONDS 1000
+#define TICKS_PER_SECOND MS_IN_SECONDS / TICK_LENGTH_MS
     if (ticks == TICKS_PER_SECOND - 1)
     {
         ticks = 0;
