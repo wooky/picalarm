@@ -15,6 +15,5 @@ void main()
         buzzer_tick();
         
         SLEEP();
-        PIR4bits.TMR2IF = 0;
     }
 }

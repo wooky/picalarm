@@ -27,22 +27,27 @@ inline void init()
     TRISC = 0;
 
     //////////////// CLOCK SETUP ////////////////
+    
+    // Operate the timer in 8-bit mode so we can set a period buffer
+    T0CON0bits.T016BIT = 0;
 
     // Use LFINTOSC as the clock source (31 kHz)
     // TODO change this to an external signal
-#define TIMER2_LFINTOSC 0b0100
-    T2CLKCONbits.CS = TIMER2_LFINTOSC;
+#define TIMER0_LFINTOSC 0b100
+    T0CON1bits.T0CS = TIMER0_LFINTOSC;
+    
+    // Make the timer asynchronous to have it wake up from sleep
+    T0CON1bits.T0ASYNC = 1;
     
     // We want the timer to trigger often enough to render the segments, around
     // 4ms. With this TEST timer it's 124 cycles or so.
-    T2PRbits.PR = 124;
+    TMR0H = 124;
     
     // Get the timer to trigger an interrupt
-    INTCONbits.PEIE = 1;
-    PIE4bits.TMR2IE = 1;
+    PIE0bits.TMR0IE = 1;
     
     // Finally, turn on the timer
-    T2CONbits.ON = 1;
+    T0CON0bits.T0EN = 1;
 
 #ifndef __DEBUG
     // Wait until internal oscillator stabilizes
