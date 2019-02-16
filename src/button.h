@@ -8,6 +8,7 @@
 
 typedef struct {
     const uint8_t button_mask;
+    const bool reset_ticks_between_holds;
     uint8_t ticks_pushed;
 } button;
 

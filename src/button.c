@@ -2,9 +2,9 @@
 #include "pinout.h"
 #include "segment.h"
 
-static button button_minutes = {BTN_MINUTE, 0};
-static button button_hours = {BTN_HOUR, 0};
-static button button_alarm = {BTN_ALARM_ADJUST, 0};
+static button button_minutes = {BTN_MINUTE, true, 0};
+static button button_hours = {BTN_HOUR, true, 0};
+static button button_alarm = {BTN_ALARM_ADJUST, false, 0};
 
 inline void button_tick()
 {
@@ -34,7 +34,10 @@ static bool button_is_pressed(button* btn)
 
     if (current_value == TICKS_FOR_PRESS)
     {
-        btn->ticks_pushed = 0;
+        if (btn->reset_ticks_between_holds) {
+            btn->ticks_pushed = 0;
+        }
+
         return 1;
     }
     else
