@@ -1,7 +1,7 @@
 #include "buzzer.h"
 #include "segment.h"
 
-#define ALARM_SWITCHED_ON (BUTTON_PORT & SWT_ALARM)
+#define ALARM_SWITCHED_ON (BUTTON_LAT & SWT_ALARM)
 static bool alarm_ringing;
 
 inline void buzzer_trigger()

@@ -24,7 +24,7 @@ inline void button_tick()
 
 static bool button_is_pressed(button* btn)
 {
-    if (!(BUTTON_PORT & btn->button_mask))
+    if (!(BUTTON_LAT & btn->button_mask))
     {
         btn->ticks_pushed = 0;
         return 0;
