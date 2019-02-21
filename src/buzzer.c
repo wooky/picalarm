@@ -11,7 +11,8 @@ inline void buzzer_trigger()
             && minutes_tens.value == minutes_tens.alarm_value
             && minutes_ones.value == minutes_ones.alarm_value)
     {
-        // TODO setup PWM using these steps (from section 29.1.9 in the manual):
+        // Setup PWM using these steps (from section 29.1.9 in the manual):
+        // Assume 770Hz, then 960Hz
         // 1. Set buzzer pin to input
         BUZZER_TRIS |= BUZZER_PIN;
         
@@ -19,12 +20,38 @@ inline void buzzer_trigger()
         // Skip, it will always be active high
         
         // 3. Load PWM period value
-        // TODO
+        // With PR2=80 and prescale=4, frequency becomes 771.60 Hz
+#define TIMER2_PR 80
+#define TIMER2_PRESCALE 4
+        T2PRbits.PR = TIMER2_PR;
         
         // 4. Load PWM duty cycle
-        // TODO
+        // Duty cycle is 50%, so PWM3DC becomes 0.5*4(80+1) = 162
+#define MY_PWM3DC 162
+        PWM3DCHbits.DC = PWM3DC >> 2;
+        PWM3DCLbits.DC = PWM3DC & 0b11;
         
-        // oh my fuck this is getting out of hand
+        // 5a. Clear TMR2 interrupt flag
+        PIR4bits.TMR2IF = false;
+        
+        // 5b. Set TMR2 prescale
+        T2CONbits.CKPS = TIMER2_PRESCALE;
+        
+        // 5c. Enable Timer2
+        T2CONbits.ON = true;
+        
+        // 6. Wait until TMR2IF is set
+        while (!PIR4bits.TMR2IF);
+
+        // 7a. Enable buzzer pin output
+        BUZZER_TRIS &= ~BUZZER_PIN;
+        
+        // 7b. Route PWM signal to desired pin, i.e. BUZZER_PIN
+#define PWM3OUT_PPS 0x0B
+        BUZZER_PPS = PWM3OUT_PPS;
+        
+        // 7c. Enable PWM module
+        PWM3CONbits.EN = true;
     }
 }
 
@@ -39,6 +66,7 @@ inline void buzzer_tick()
         else
         {
             // TODO de-setup PWM
+            PWM3CONbits.EN = false;
         }
     }
 }
