@@ -56,7 +56,7 @@ inline void segment_render()
     seg = seg->next;
 }
 
-static bit segment_incrementer_standard(segment* seg, bool adjust_alarm)
+static __bit segment_incrementer_standard(segment* seg, bool adjust_alarm)
 {
     uint8_t* current_value = adjust_alarm ? &seg->alarm_value : &seg->value;
     if (*current_value == seg->max)
@@ -71,7 +71,7 @@ static bit segment_incrementer_standard(segment* seg, bool adjust_alarm)
     }
 }
 
-static bit segment_incrementer_for_hours_ones(segment* seg, uint8_t adjust_alarm)
+static __bit segment_incrementer_for_hours_ones(segment* seg, bool adjust_alarm)
 {
     if (adjust_alarm && seg->alarm_value == 3 && seg->next->alarm_value == 2)
     {
