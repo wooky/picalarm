@@ -6,6 +6,7 @@
 
 inline void buzzer_trigger()
 {
+#if 0
     if (ALARM_SWITCHED_ON && hours_tens.value == hours_tens.alarm_value
             && hours_ones.value == hours_ones.alarm_value
             && minutes_tens.value == minutes_tens.alarm_value
@@ -53,10 +54,12 @@ inline void buzzer_trigger()
         // 7c. Enable PWM module
         PWM3CONbits.EN = true;
     }
+#endif
 }
 
 inline void buzzer_tick()
 {
+#if 0
     if (BUZZER_RINGING)
     {
         if (ALARM_SWITCHED_ON)
@@ -69,4 +72,5 @@ inline void buzzer_tick()
             PWM3CONbits.EN = false;
         }
     }
+#endif
 }

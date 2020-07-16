@@ -5,14 +5,8 @@ inline void init()
 {
     //    ;;;;;;;; PIN SETUP ;;;;;;;;
     //    ; Set all I/O ports to be digital, not analog
-    ANSELA = 0;
-    ANSELB = 0;
-    ANSELC = 0;
-
-    //    ; Don't output any signals on I/O ports just yet
-    LATA = 0;
-    LATB = 0;
-    LATC = 0;
+#define ADCON1_ALL_DIGITAL 0b110
+    ADCON1bits.PCFG = ADCON1_ALL_DIGITAL;
 
     //    ; Get the ports to a known state
     PORTA = 0;
@@ -27,30 +21,17 @@ inline void init()
     TRISC = 0;
 
     //////////////// CLOCK SETUP ////////////////
-    
-    // Operate the timer in 8-bit mode so we can set a period buffer
-    T0CON0bits.T016BIT = 0;
 
-    // Use LFINTOSC as the clock source (31 kHz)
-    // TODO change this to an external signal
-#define TIMER0_LFINTOSC 0b100
-    T0CON1bits.T0CS = TIMER0_LFINTOSC;
+    // Use external oscillator as the clock source (32.768 kHz)
+    T1CONbits.TMR1CS = 1;
     
     // Make the timer asynchronous to have it wake up from sleep
-    T0CON1bits.T0ASYNC = 1;
-    
-    // We want the timer to trigger often enough to render the segments, around
-    // 4ms. With this TEST timer it's 124 cycles or so.
-    TMR0H = 124;
+    T1CONbits.T1INSYNC = 1;
     
     // Get the timer to trigger an interrupt
-    PIE0bits.TMR0IE = 1;
+    PIE1bits.TMR1IE = 1;
+    INTCONbits.PEIE = 1;
     
-    // Finally, turn on the timer
-    T0CON0bits.T0EN = 1;
-
-#ifndef __DEBUG
-    // Wait until internal oscillator stabilizes
-    while (!OSCSTATbits.HFOR);
-#endif
+    // Turn on timer oscillator
+    T1CONbits.T1OSCEN = 1;
 }

@@ -4,10 +4,13 @@
 
 inline void clock_tick()
 {
+    // Reset the timer
+    T1CONbits.TMR1ON = 0;
+    PIR1bits.TMR1IF = 0;
+    TMR1 = -CYCLES_PER_TICK;
+    T1CONbits.TMR1ON = 1;
+    
     static uint8_t ticks = 0;
-    PIR0 &= ~_PIR0_TMR0IF_MASK;
-#define MS_IN_SECONDS 1000
-#define TICKS_PER_SECOND MS_IN_SECONDS / TICK_LENGTH_MS
     if (ticks == TICKS_PER_SECOND - 1)
     {
         ticks = 0;
