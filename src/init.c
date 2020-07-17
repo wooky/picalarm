@@ -25,13 +25,19 @@ inline void init()
     // Use external oscillator as the clock source (32.768 kHz)
     T1CONbits.TMR1CS = 1;
     
-    // Make the timer asynchronous to have it wake up from sleep
-    T1CONbits.T1INSYNC = 1;
+    // Trigger an interrupt every 128 cycles, ~4ms
+    CCPR1 = 127;
     
     // Get the timer to trigger an interrupt
-    PIE1bits.TMR1IE = 1;
+#define CCP1_SPECIAL_EVENT_TRIGGER 0b1011
+    CCP1CONbits.CCP1M = CCP1_SPECIAL_EVENT_TRIGGER;
+    PIE1bits.CCP1IE = 1;
     INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
     
     // Turn on timer oscillator
     T1CONbits.T1OSCEN = 1;
+    
+    // Finally, turn on the timer
+    T1CONbits.TMR1ON = 1;
 }

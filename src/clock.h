@@ -3,8 +3,7 @@
 
 #include "pinout.h"
 
-#define CYCLES_PER_TICK 128     // Approx 4ms @ 32.768kHz
-#define TICKS_PER_SECOND 247    // IDK
+#define TICKS_PER_SECOND 256
 
 inline void clock_tick();
 

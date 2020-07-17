@@ -7,13 +7,18 @@
 void main()
 {
     init();
+    // Spin, waiting for an interrupt
     while (1)
     {
-        clock_tick();
-        button_tick();
-        segment_render();
-        buzzer_tick();
-        
-        SLEEP();
+        CLRWDT();
     }
+}
+
+void __interrupt() on_interrupt()
+{
+    PIR1bits.CCP1IF = 0;
+    clock_tick();
+    button_tick();
+    segment_render();
+    buzzer_tick();
 }
