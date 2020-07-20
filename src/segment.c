@@ -1,10 +1,12 @@
 #include "segment.h"
 #include "button.h"
+#include "clock.h"
 #include "pinout.h"
 
+#define SEGMENT_COUNT_MINUS_1 SEGMENT_COUNT - 1
 #define LED_SEG_ALL LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT
 
-const uint8_t digit_masks[10] = {
+const uint8_t digit_masks_standard[10] = {
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
     LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT,
@@ -16,75 +18,95 @@ const uint8_t digit_masks[10] = {
     LED_SEG_ALL,
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT
 };
+const uint8_t digit_masks_hour_tens[4] = {
+    0,
+    LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
+    LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT,
+    LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
+};
 
-segment hours_tens = {0, 0, 9, CATHODE_HOURS_TENS, &minutes_ones, segment_incrementer_standard};
-segment hours_ones = {0, 0, 9, CATHODE_HOURS_ONES, &hours_tens, segment_incrementer_for_hours_ones};
-segment minutes_tens = {0, 0, 5, CATHODE_MINUTES_TENS, &hours_ones, segment_incrementer_standard};
-segment minutes_ones = {0, 0, 9, CATHODE_MINUTES_ONES, &minutes_tens, segment_incrementer_standard};
+#define BUILD_SEGMENT_PAIRS() { \
+    { \
+        {digit_masks_hour_tens, CATHODE_HOURS_TENS, 0}, \
+        {digit_masks_standard, CATHODE_HOURS_ONES, 0}, \
+        2, 3 \
+    }, \
+    { \
+        {digit_masks_standard, CATHODE_MINUTES_TENS, 0}, \
+        {digit_masks_standard, CATHODE_MINUTES_ONES, 0}, \
+        5, 9 \
+    } \
+}
+segment_pair clock_segment_pair[2] = BUILD_SEGMENT_PAIRS();
+segment_pair alarm_segment_pair[2] = BUILD_SEGMENT_PAIRS();
+
+segment_single* clock_segments[SEGMENT_COUNT] = {
+    &clock_segment_pair[0].segment_tens, &clock_segment_pair[0].segment_ones,
+    &clock_segment_pair[1].segment_tens, &clock_segment_pair[1].segment_ones
+};
+segment_single* alarm_segments[SEGMENT_COUNT] = {
+    &alarm_segment_pair[0].segment_tens, &alarm_segment_pair[0].segment_ones,
+    &alarm_segment_pair[1].segment_tens, &alarm_segment_pair[1].segment_ones
+};
 
 uint8_t seconds_indicator_state = 0;
+
+inline void segment_tick()
+{
+    if (CLOCK_SECOND_ELAPSED())
+    {
+        segment_toggle_seconds();
+    }
+    
+    bool alarm = IS_BUTTON_PRESSED(BTN_ALARM_ADJUST);
+    if (CLOCK_MINUTE_ELAPSED() || IS_BUTTON_PRESSED(BTN_MINUTE))
+    {
+        if (segment_increment(1, alarm))
+        {
+            segment_increment(0, alarm);
+        }
+    }
+    if (IS_BUTTON_PRESSED(BTN_HOUR))
+    {
+        segment_increment(0, alarm);
+    }
+    
+    segment_render(alarm);
+}
 
 inline void segment_toggle_seconds()
 {
     seconds_indicator_state ^= LED_SECONDS_INDICATOR;
 }
 
-inline void segment_increment_minute(bool adjust_alarm)
+bool segment_increment(uint8_t idx, bool alarm)
 {
-    segment *curr = &minutes_ones;
-    while (!curr->incrementer(curr, adjust_alarm))
+    segment_pair *seg = (alarm ? &alarm_segment_pair : &clock_segment_pair)[idx];
+    if (seg->segment_tens.value == seg->max_tens && seg->segment_ones.value == seg->max_ones)
     {
-        curr = curr->next;
+        seg->segment_tens.value = 0;
+        seg->segment_ones.value = 0;
+        return true;
     }
-}
-
-inline void segment_increment_hour(bool adjust_alarm)
-{
-    segment *curr = &hours_ones;
-    while (!curr->incrementer(curr, adjust_alarm))
+    
+    if (seg->segment_ones.value == 9)
     {
-        curr = curr->next;
-    }
-}
-
-inline void segment_render()
-{
-    static segment *seg = &minutes_ones;
-    int8_t value = button_alarm_pressed ? seg->alarm_value : seg->value;
-    CATHODE_LAT = 0;
-    LED_SEG_LAT = digit_masks[value] | seconds_indicator_state;
-    CATHODE_LAT = seg->cathode_bitmask;
-    seg = seg->next;
-}
-
-static __bit segment_incrementer_standard(segment* seg, bool adjust_alarm)
-{
-    uint8_t* current_value = adjust_alarm ? &seg->alarm_value : &seg->value;
-    if (*current_value == seg->max)
-    {
-        *current_value = 0;
-        return 0;
+        seg->segment_tens.value++;
+        seg->segment_ones.value = 0;
     }
     else
     {
-        (*current_value)++;
-        return 1;
+        seg->segment_ones.value++;
     }
+    return false;
 }
 
-static __bit segment_incrementer_for_hours_ones(segment* seg, bool adjust_alarm)
+inline void segment_render(bool alarm)
 {
-    if (adjust_alarm && seg->alarm_value == 3 && seg->next->alarm_value == 2)
-    {
-        seg->alarm_value = 0;
-        seg->next->alarm_value = 0;
-        return 1;
-    }
-    if (seg->value == 3 && seg->next->value == 2)
-    {
-        seg->value = 0;
-        seg->next->value = 0;
-        return 1;
-    }
-    return segment_incrementer_standard(seg, adjust_alarm);
+    static uint8_t current_segment_rendered = 0;
+    segment_single *seg = (alarm ? alarm_segments : clock_segments)[current_segment_rendered];
+    CATHODE_LAT = 0;
+    LED_SEG_LAT = seg->digit_masks[seg->value] | seconds_indicator_state;
+    CATHODE_LAT = seg->cathode_bitmask;
+    current_segment_rendered += (current_segment_rendered == SEGMENT_COUNT_MINUS_1) ? -SEGMENT_COUNT_MINUS_1 : 1;
 }

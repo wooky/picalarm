@@ -4,26 +4,26 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef struct _segment {
-    uint8_t value;
-    uint8_t alarm_value;
-    const uint8_t max: 4;
+#define SEGMENT_COUNT 4
+
+typedef struct {
+    const uint8_t* digit_masks;
     const uint8_t cathode_bitmask;
-    struct _segment* next;
-    __bit(*incrementer)(struct _segment*, bool);
-} segment;
+    uint8_t value;
+} segment_single;
 
-extern segment hours_tens;
-extern segment hours_ones;
-extern segment minutes_tens;
-extern segment minutes_ones;
+typedef struct {
+    segment_single segment_tens;
+    segment_single segment_ones;
+    const uint8_t max_tens: 4;
+    const uint8_t max_ones: 4;
+} segment_pair;
 
-inline void segment_toggle_seconds();
-inline void segment_increment_minute(bool);
-inline void segment_increment_hour(bool);
-inline void segment_render();
+inline void segment_tick();
 
-static __bit segment_incrementer_standard(segment*, bool);
-static __bit segment_incrementer_for_hours_ones(segment*, bool);
+// TODO re-add statics
+inline  void segment_toggle_seconds();
+ bool segment_increment(uint8_t, bool);
+inline  void segment_render(bool);
 
 #endif  //PICALARM_SEGMENT_H_

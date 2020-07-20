@@ -13,7 +13,7 @@ void __interrupt() on_interrupt()
     PIR1bits.CCP1IF = 0;
     clock_tick();
     button_tick();
-    segment_render();
+    segment_tick();
     buzzer_tick();
 }
 

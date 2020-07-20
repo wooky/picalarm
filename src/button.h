@@ -4,16 +4,17 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+uint8_t __all_pressed_buttons;
+#define IS_BUTTON_PRESSED(x) (__all_pressed_buttons & x)
+
 typedef struct {
     const uint8_t button_mask: 8;
     const bool reset_ticks_between_holds: 1;
     uint8_t ticks_pushed: 7;
 } button;
 
-bool button_alarm_pressed;
-
 inline void button_tick();
 
-static bool button_is_pressed(button* btn);
+static uint8_t button_single_tick(button* btn);
 
 #endif  //PICALARM_BUTTON_H_

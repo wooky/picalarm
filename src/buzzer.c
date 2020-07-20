@@ -1,5 +1,4 @@
 #include "buzzer.h"
-#include "segment.h"
 
 #define ALARM_SWITCHED_ON (BUTTON_LAT & SWT_ALARM)
 #define BUZZER_RINGING (BUZZER_LAT & BUZZER_PIN)

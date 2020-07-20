@@ -1,6 +1,5 @@
 #include "button.h"
 #include "pinout.h"
-#include "segment.h"
 #include "timing.h"
 
 static button button_minutes = {BTN_MINUTE, true, 0};
@@ -9,21 +8,13 @@ static button button_alarm = {BTN_ALARM_ADJUST, false, 0};
 
 inline void button_tick()
 {
-    bool minutes_pressed = button_is_pressed(&button_minutes);
-    bool hours_pressed = button_is_pressed(&button_hours);
-    button_alarm_pressed = button_is_pressed(&button_alarm);
-
-    if (minutes_pressed)
-    {
-        segment_increment_minute(button_alarm_pressed);
-    }
-    if (hours_pressed)
-    {
-        segment_increment_hour(button_alarm_pressed);
-    }
+    __all_pressed_buttons =
+        button_single_tick(&button_minutes) |
+        button_single_tick(&button_hours) |
+        button_single_tick(&button_alarm);
 }
 
-static bool button_is_pressed(button* btn)
+static uint8_t button_single_tick(button* btn)
 {
     if (!(BUTTON_LAT & btn->button_mask))
     {
@@ -39,7 +30,7 @@ static bool button_is_pressed(button* btn)
             btn->ticks_pushed = 0;
         }
 
-        return 1;
+        return btn->button_mask;
     }
     else
     {

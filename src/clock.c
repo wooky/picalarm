@@ -1,7 +1,6 @@
 #include "clock.h"
-#include "buzzer.h"
-#include "segment.h"
 #include "timing.h"
+#include <stdint.h>
 
 inline void clock_tick()
 {
@@ -10,11 +9,12 @@ inline void clock_tick()
     {
         ticks = 0;
         clock_increment_second();
-        segment_toggle_seconds();
+        __second_elapsed = true;
     }
     else
     {
         ticks++;
+        __second_elapsed = false;
     }
 }
 
@@ -24,11 +24,11 @@ inline static void clock_increment_second()
     if (seconds == 59)
     {
         seconds = 0;
-        segment_increment_minute(false);
-        buzzer_trigger();
+        __minute_elapsed = true;
     }
     else
     {
         seconds++;
+        __minute_elapsed = false;
     }
 }
