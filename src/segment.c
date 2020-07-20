@@ -3,8 +3,7 @@
 #include "clock.h"
 #include "pinout.h"
 
-#define SEGMENT_COUNT_MINUS_1 SEGMENT_COUNT - 1
-#define LED_SEG_ALL LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT
+#define SEGMENT_COUNT_MINUS_1 (SEGMENT_COUNT - 1)
 
 const uint8_t digit_masks[10] = {
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
@@ -15,19 +14,19 @@ const uint8_t digit_masks[10] = {
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
-    LED_SEG_ALL,
+    LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT
 };
 
 #define BUILD_SEGMENT_PAIRS() { \
     { \
-        {CATHODE_HOURS_TENS, 0, true}, \
-        {CATHODE_HOURS_ONES, 0, false}, \
+        {CATHODE_HOURS_TENS, true, 0}, \
+        {CATHODE_HOURS_ONES, false, 0}, \
         2, 3 \
     }, \
     { \
-        {CATHODE_MINUTES_TENS, 0, false}, \
-        {CATHODE_MINUTES_ONES, 0, false}, \
+        {CATHODE_MINUTES_TENS, false, 0}, \
+        {CATHODE_MINUTES_ONES, false, 0}, \
         5, 9 \
     } \
 }
