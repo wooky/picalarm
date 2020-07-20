@@ -74,7 +74,7 @@ inline void segment_toggle_seconds()
 
 bool segment_increment(uint8_t idx, bool alarm)
 {
-    segment_pair *seg = (alarm ? &alarm_segment_pair : &clock_segment_pair)[idx];
+    segment_pair *seg = &(alarm ? alarm_segment_pair : clock_segment_pair)[idx];
     if (seg->segment_tens.value == seg->max_tens && seg->segment_ones.value == seg->max_ones)
     {
         seg->segment_tens.value = 0;
