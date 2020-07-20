@@ -1,6 +1,7 @@
 #include "button.h"
 #include "pinout.h"
 #include "segment.h"
+#include "timing.h"
 
 static button button_minutes = {BTN_MINUTE, true, 0};
 static button button_hours = {BTN_HOUR, true, 0};

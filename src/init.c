@@ -1,5 +1,6 @@
 #include "init.h"
 #include "pinout.h"
+#include "timing.h"
 
 inline void init()
 {
@@ -25,8 +26,8 @@ inline void init()
     // Use external oscillator as the clock source (32.768 kHz)
     T1CONbits.TMR1CS = 1;
     
-    // Trigger an interrupt every 128 cycles, ~4ms
-    CCPR1 = 127;
+    // Trigger an interrupt every ~4ms
+    CCPR1 = OSCILLATIONS_PER_TICK;
     
     // Get the timer to trigger an interrupt
 #define CCP1_SPECIAL_EVENT_TRIGGER 0b1011

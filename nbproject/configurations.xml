@@ -10,6 +10,7 @@
       <itemPath>src/segment.h</itemPath>
       <itemPath>src/buzzer.h</itemPath>
       <itemPath>src/clock.h</itemPath>
+      <itemPath>src/timing.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

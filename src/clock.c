@@ -1,6 +1,7 @@
 #include "clock.h"
 #include "buzzer.h"
 #include "segment.h"
+#include "timing.h"
 
 inline void clock_tick()
 {

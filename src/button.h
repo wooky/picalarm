@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define TICKS_FOR_PRESS 62
-
 typedef struct {
     const uint8_t button_mask;
     const bool reset_ticks_between_holds;
