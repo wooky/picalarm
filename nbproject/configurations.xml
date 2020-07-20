@@ -43,7 +43,7 @@
         <targetDevice>PIC16F73</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.10</languageToolchainVersion>
         <platform>3</platform>

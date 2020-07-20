@@ -51,8 +51,9 @@ inline void segment_render()
 {
     static segment *seg = &minutes_ones;
     int8_t value = button_alarm_pressed ? seg->alarm_value : seg->value;
-    CATHODE_LAT = seg->cathode_bitmask;
+    CATHODE_LAT = 0;
     LED_SEG_LAT = digit_masks[value] | seconds_indicator_state;
+    CATHODE_LAT = seg->cathode_bitmask;
     seg = seg->next;
 }
 
