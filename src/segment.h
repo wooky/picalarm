@@ -7,7 +7,7 @@
 typedef struct _segment {
     uint8_t value;
     uint8_t alarm_value;
-    const uint8_t max;
+    const uint8_t max: 4;
     const uint8_t cathode_bitmask;
     struct _segment* next;
     __bit(*incrementer)(struct _segment*, bool);

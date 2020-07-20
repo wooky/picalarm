@@ -5,9 +5,9 @@
 #include <stdint.h>
 
 typedef struct {
-    const uint8_t button_mask;
-    const bool reset_ticks_between_holds;
-    uint8_t ticks_pushed;
+    const uint8_t button_mask: 8;
+    const bool reset_ticks_between_holds: 1;
+    uint8_t ticks_pushed: 7;
 } button;
 
 bool button_alarm_pressed;
