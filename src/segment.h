@@ -7,9 +7,9 @@
 #define SEGMENT_COUNT 4
 
 typedef struct {
-    const uint8_t* digit_masks;
     const uint8_t cathode_bitmask;
-    uint8_t value;
+    const bool no_zero_render: 1;
+    uint8_t value: 7;
 } segment_single;
 
 typedef struct {

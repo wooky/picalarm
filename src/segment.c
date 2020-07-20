@@ -6,7 +6,7 @@
 #define SEGMENT_COUNT_MINUS_1 SEGMENT_COUNT - 1
 #define LED_SEG_ALL LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT
 
-const uint8_t digit_masks_standard[10] = {
+const uint8_t digit_masks[10] = {
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_BOT_LEFT | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
     LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
     LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT,
@@ -18,22 +18,16 @@ const uint8_t digit_masks_standard[10] = {
     LED_SEG_ALL,
     LED_SEG_TOP | LED_SEG_TOP_LEFT | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT
 };
-const uint8_t digit_masks_hour_tens[4] = {
-    0,
-    LED_SEG_TOP_RIGHT | LED_SEG_BOT_RIGHT,
-    LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_LEFT | LED_SEG_BOT,
-    LED_SEG_TOP | LED_SEG_TOP_RIGHT | LED_SEG_MID | LED_SEG_BOT_RIGHT | LED_SEG_BOT,
-};
 
 #define BUILD_SEGMENT_PAIRS() { \
     { \
-        {digit_masks_hour_tens, CATHODE_HOURS_TENS, 0}, \
-        {digit_masks_standard, CATHODE_HOURS_ONES, 0}, \
+        {CATHODE_HOURS_TENS, 0, true}, \
+        {CATHODE_HOURS_ONES, 0, false}, \
         2, 3 \
     }, \
     { \
-        {digit_masks_standard, CATHODE_MINUTES_TENS, 0}, \
-        {digit_masks_standard, CATHODE_MINUTES_ONES, 0}, \
+        {CATHODE_MINUTES_TENS, 0, false}, \
+        {CATHODE_MINUTES_ONES, 0, false}, \
         5, 9 \
     } \
 }
@@ -106,7 +100,8 @@ inline void segment_render(bool alarm)
     static uint8_t current_segment_rendered = 0;
     segment_single *seg = (alarm ? alarm_segments : clock_segments)[current_segment_rendered];
     CATHODE_LAT = 0;
-    LED_SEG_LAT = seg->digit_masks[seg->value] | seconds_indicator_state;
+    uint8_t digit = (seg->no_zero_render && seg->value == 0) ? 0 : digit_masks[seg->value];
+    LED_SEG_LAT = digit | seconds_indicator_state;
     CATHODE_LAT = seg->cathode_bitmask;
     current_segment_rendered += (current_segment_rendered == SEGMENT_COUNT_MINUS_1) ? -SEGMENT_COUNT_MINUS_1 : 1;
 }
